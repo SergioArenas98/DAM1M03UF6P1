@@ -15,13 +15,12 @@ public class Employee extends Person implements Logable {
     @Override
     public boolean login(int userId, String password) {
         
-    	boolean isAuthenticated = false;
+    	boolean authenticated = false;
         
     	try {
             employeeDao.connect();
-            Employee employee = employeeDao.getEmployee(userId, password);
-            if (employee != null) {
-                isAuthenticated = true;
+            if (employeeDao.getEmployee(userId, password) != null) {
+                authenticated = true;
             }
             employeeDao.disconnect();
         
@@ -29,6 +28,6 @@ public class Employee extends Person implements Logable {
             e.printStackTrace();
         }
         
-    	return isAuthenticated;
+    	return authenticated;
     }
 }

@@ -39,17 +39,18 @@ public class DaoImplJDBC implements Dao{
 		Employee employee = null;
 		
 		// Prepare SELECT query
-		String query = "SELECT * FROM employee WHERE employeeId = ?;";
+		String query = "SELECT * FROM employee WHERE employeeId = ? AND employeePassword = ?;";
 		
 		try (PreparedStatement ps = connection.prepareStatement(query)) { 
 			
 			// Set the variable to search for the employee
 			ps.setInt(1,employeeId);
+			ps.setString(2,password);
 		  	
 			// If employeeId is found, create employee
 	        try (ResultSet rs = ps.executeQuery()) {
 	        	if (rs.next()) {
-	        		employee =  new Employee(rs.getInt(1), rs.getString(3));            		            				
+	        		employee =  new Employee(rs.getInt(1), rs.getString(2));            		            				
 	        	}
 	        }
 	    } catch (SQLException e) {
